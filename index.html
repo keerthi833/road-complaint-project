@@ -1,23 +1,49 @@
-<section>
+<!DOCTYPE html>
+<html>
 
-    <h2>Contact / Complaint</h2>
+<head>
+    <title>Road Damage on Society and Economy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    <form id="complaintForm">
+<body>
 
-        <input type="text" id="name" placeholder="Enter your name">
+    <header>
+        <h1>Road Damage on Society and Economy</h1>
+        <p>Raising awareness about damaged roads and public safety.</p>
+    </header>
 
-        <br><br>
+    <section>
+        <h2>About Our Project</h2>
+        <p>This project explains how damaged roads affect society, transport, public safety, and the economy.</p>
+    </section>
 
-        <textarea id="complaint" placeholder="Write your complaint"></textarea>
+    <section>
+        <h2>Problems Faced by People</h2>
+        <ul>
+            <li>Road accidents</li>
+            <li>Traffic issues</li>
+            <li>Vehicle damage</li>
+            <li>Fuel waste</li>
+        </ul>
+    </section>
 
-        <br><br>
+    <section>
+        <h2>Contact / Complaint</h2>
 
-        <button type="submit">Submit</button>
+        <form id="complaintForm">
+            <input type="text" id="name" placeholder="Enter your name">
+            <br><br>
+            <textarea id="complaint" placeholder="Write your complaint"></textarea>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
 
-    </form>
+        <div id="complaints"></div>
+    </section>
 
-    <div id="complaints"></div>
+    <script src="script.js"></script>
 
-</section>
+</body>
 
-<script src="script.js"></script>
+</html>
