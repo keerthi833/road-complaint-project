@@ -1,73 +1,48 @@
-const button = document.getElementById("submit");
+const form = document.getElementById("complaintForm");
 const complaints = document.getElementById("complaints");
 
-// page load ayyaka data load
-window.onload = function(){
+// load saved complaints
+window.onload = function () {
     let saved = JSON.parse(localStorage.getItem("complaints")) || [];
-    saved.forEach(data => createCard(data.name, data.text, data.time, data.image));
+
+    saved.forEach(item => {
+        showComplaint(item.name, item.complaint);
+    });
 };
 
-button.addEventListener("click", function(e){
+form.addEventListener("submit", function (e) {
+    e.preventDefault(); // ❗ STOP REFRESH
 
-e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const complaint = document.getElementById("complaint").value.trim();
 
-const name = document.getElementById("name").value;
-const complaint = document.getElementById("complaint").value;
-const photo = document.getElementById("photo").files[0];
+    if (name === "" || complaint === "") {
+        alert("Please fill all fields");
+        return;
+    }
 
-if(name === "" || complaint === ""){
-    alert("Please fill all fields");
-    return;
-}
+    let saved = JSON.parse(localStorage.getItem("complaints")) || [];
 
-const time = new Date().toLocaleString();
+    saved.push({
+        name: name,
+        complaint: complaint
+    });
 
-const reader = new FileReader();
+    localStorage.setItem("complaints", JSON.stringify(saved));
 
-reader.onload = function(){
+    showComplaint(name, complaint);
 
-let data = {
-    name: name,
-    text: complaint,
-    time: time,
-    image: reader.result
-};
-
-let old = JSON.parse(localStorage.getItem("complaints")) || [];
-old.push(data);
-localStorage.setItem("complaints", JSON.stringify(old));
-
-createCard(name, complaint, time, reader.result);
-
-};
-
-if(photo){
-    reader.readAsDataURL(photo);
-}
-
-document.getElementById("name").value = "";
-document.getElementById("complaint").value = "";
-
+    form.reset();
 });
 
-// card create function
-function createCard(name, complaint, time, image){
+function showComplaint(name, complaint) {
+    const card = document.createElement("div");
 
-const card = document.createElement("div");
+    card.innerHTML = `
+        <h3>${name}</h3>
+        <p>${complaint.replace(/\n/g, "<br>")}</p>
+        <hr>
+    `;
 
-card.innerHTML = `
-<h3>${name}</h3>
-<p>${complaint}</p>
-<p><b>Time:</b> ${time}</p>
-<img src="${image}" width="250">
-<br><br>
-<button class="delete">Delete</button>
-`;
-
-complaints.appendChild(card);
-
-card.querySelector(".delete").addEventListener("click", function(){
-    card.remove();
-});
-
+    complaints.appendChild(card);
 }
